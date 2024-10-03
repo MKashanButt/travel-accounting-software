@@ -29,14 +29,12 @@ import {
   Plane,
   MapPin,
   Menu,
-  ChevronDown,
-  ChevronRight,
-  Settings,
   User,
   ChevronLeft,
   ChevronRight as ChevronRightIcon,
 } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from "recharts";
+import Sidebar from "@/components/Sidebar";
 
 const data = [
   { name: "Jan", value: 4000 },
@@ -143,8 +141,6 @@ const transactionData = [
 
 export default function HomePage() {
   const [activeTab, setActiveTab] = useState("home");
-  const [openAccounts, setOpenAccounts] = useState(false);
-  const [openSale, setOpenSale] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -157,135 +153,6 @@ export default function HomePage() {
       document.documentElement.classList.remove("dark");
     }
   }, [darkMode]);
-
-  const SidebarContent = () => (
-    <>
-      <div className="flex h-20 items-center justify-center border-b">
-        <h1 className="text-xl font-bold text-gray-800 dark:text-gray-200">
-          TravelAccountPro
-        </h1>
-      </div>
-      <nav className="flex-1 p-4">
-        <ul className="space-y-2">
-          <li>
-            <Button
-              variant="ghost"
-              className="w-full justify-start text-left font-normal"
-              onClick={() => setActiveTab("home")}
-            >
-              Home
-            </Button>
-          </li>
-          <li>
-            <Collapsible open={openAccounts} onOpenChange={setOpenAccounts}>
-              <CollapsibleTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start text-left font-normal"
-                >
-                  Accounts
-                  {openAccounts ? (
-                    <ChevronDown className="ml-auto h-4 w-4" />
-                  ) : (
-                    <ChevronRight className="ml-auto h-4 w-4" />
-                  )}
-                </Button>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="space-y-2 mt-2">
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start pl-6 text-left font-normal"
-                  onClick={() => setActiveTab("company-accounts")}
-                >
-                  Company Accounts
-                </Button>
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start pl-6 text-left font-normal"
-                  onClick={() => setActiveTab("client-accounts")}
-                >
-                  Client Accounts
-                </Button>
-              </CollapsibleContent>
-            </Collapsible>
-          </li>
-          <li>
-            <Collapsible open={openSale} onOpenChange={setOpenSale}>
-              <CollapsibleTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start text-left font-normal"
-                >
-                  Sale
-                  {openSale ? (
-                    <ChevronDown className="ml-auto h-4 w-4" />
-                  ) : (
-                    <ChevronRight className="ml-auto h-4 w-4" />
-                  )}
-                </Button>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="space-y-2 mt-2">
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start pl-6 text-left font-normal"
-                  onClick={() => setActiveTab("clients")}
-                >
-                  Clients
-                </Button>
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start pl-6 text-left font-normal"
-                  onClick={() => setActiveTab("client-accounts")}
-                >
-                  Client Accounts
-                </Button>
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start pl-6 text-left font-normal"
-                  onClick={() => setActiveTab("tickets")}
-                >
-                  Tickets
-                </Button>
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start pl-6 text-left font-normal"
-                  onClick={() => setActiveTab("umrah-hajj")}
-                >
-                  Umrah & Hajj
-                </Button>
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start pl-6 text-left font-normal"
-                  onClick={() => setActiveTab("payments")}
-                >
-                  Payments
-                </Button>
-              </CollapsibleContent>
-            </Collapsible>
-          </li>
-          <li>
-            <Button
-              variant="ghost"
-              className="w-full justify-start text-left font-normal"
-              onClick={() => setActiveTab("packages")}
-            >
-              Packages
-            </Button>
-          </li>
-        </ul>
-      </nav>
-      <div className="p-4 border-t">
-        <Button
-          variant="ghost"
-          className="w-full justify-start text-left font-normal"
-          onClick={() => setActiveTab("settings")}
-        >
-          <Settings className="mr-2 h-4 w-4" />
-          Settings
-        </Button>
-      </div>
-    </>
-  );
 
   const SimpleLineChart = ({ data }: { data: any }) => (
     <ResponsiveContainer width="100%" height={100}>
@@ -316,10 +183,7 @@ export default function HomePage() {
       }`}
     >
       {/* Sidebar for larger screens */}
-      <aside className="hidden w-64 bg-white dark:bg-gray-800 shadow-md lg:flex flex-col transition-colors duration-300">
-        <SidebarContent />
-      </aside>
-
+      <Sidebar />
       {/* Main Content */}
       <div className="flex flex-1 flex-col overflow-hidden">
         {/* Header */}
@@ -332,7 +196,7 @@ export default function HomePage() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-64 p-0">
-                <SidebarContent />
+                <Sidebar />
               </SheetContent>
             </Sheet>
             <h1 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">
